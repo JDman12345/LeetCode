@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        unordered_map<int, int> map;
+        for(int i  = 0; i < students.size(); i++){
+            map[students[i]]++;
+        }
+        cout << map[1];
+        cout << map[0];
+        for(int i = 0; i < students.size(); i++){
+            if(map[sandwiches[i]] > 0){
+                map[sandwiches[i]]--;
+            }else{
+                return map[0] + map[1];
+            }
+        }
+        return 0;
+    }
+};
