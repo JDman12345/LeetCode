@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        //easy
+        vector<int> ans = nums;
+        stack<int> indexes;
+        stack<int> sack;
+        int highest = 0;
+        for(int i = 0; i < nums.size(); i++){
+            ans[i] = 0;
+        }
+
+        for(int i = 0; i < nums.size(); i++){
+            while(!sack.empty() && sack.top() < nums[i] && ans[indexes.top()] == 0){
+                ans[indexes.top()] = nums[i];
+                sack.pop();
+                indexes.pop();
+            }
+            sack.push(nums[i]);
+            indexes.push(i);
+        }
+        for(int i = 0; i < nums.size(); i++){
+            while(!sack.empty() && sack.top() < nums[i] && ans[indexes.top()] == 0){
+                ans[indexes.top()] = nums[i];
+                sack.pop();
+                indexes.pop();
+            }
+            while(!sack.empty() && indexes.top() == i){
+                ans[indexes.top()] = -1;
+                sack.pop();
+                indexes.pop();
+                i--;
+            }
+        }
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] > highest){
+                highest = nums[i];
+            }
+        }
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] == highest){
+                ans[i] = -1;
+            }
+        }
+        return ans;
+    }
+};
