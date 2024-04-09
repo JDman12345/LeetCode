@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        unordered_set<int> set;
+
+        for(int i = 0; i < 9; i++){
+            set.clear();
+            for(int j = 0; j < 9; j++){
+                if(board[i][j] == '.') continue;
+                if(set.contains(board[i][j])) return false;
+                set.insert(board[i][j]);
+            }
+        }
+        for(int i = 0; i < 9; i++){
+            set.clear();
+            for(int j = 0; j < 9; j++){
+                if(board[j][i] == '.') continue;
+                if(set.contains(board[j][i])) return false;
+                set.insert(board[j][i]);
+            }
+        }
+        for(int r = 0; r < 3; r++){
+            for(int i = 0; i < 3; i++){
+            set.clear();
+                for(int j = r * 3; j < (r * 3) + 3; j++){
+                    for(int k = i * 3; k < (i * 3) + 3; k++){
+                        if(board[j][k] == '.') continue;
+                        if(set.contains(board[j][k])) return false;
+                        set.insert(board[j][k]);
+                        cout << k;
+                    }
+                }
+            }
+        }
+        
+        return true;
+    }
+};
