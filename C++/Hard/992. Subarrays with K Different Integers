@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        int res = 0;
+        int ln = 0;
+        int lf = 0;
+        unordered_map<int, int> distinct;
+
+        for(int r = 0; r < nums.size(); r++){
+            distinct[nums[r]] += 1;
+
+            while(distinct.size() > k){
+                distinct[nums[ln]] -= 1;
+                if(distinct[nums[ln]] == 0){
+                    distinct.erase(nums[ln]);
+                }
+                ln++;
+                lf = ln;
+            }
+
+            while(distinct[nums[ln]] > 1){
+                distinct[nums[ln]] -= 1;
+                ln++;
+            }
+
+            if(distinct.size() == k){
+                res += ln - lf + 1;
+            }
+        }
+
+        return res;
+    }
+};
