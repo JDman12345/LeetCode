@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> deckRevealedIncreasing(vector<int>& deck) {
+        deque<int> d;
+        sort(deck.rbegin(), deck.rend());
+        d.push_back(deck[0]);
+
+        // pulls a higher number from the back of the queue to put in between the next number
+        for(int i = 1; i < deck.size(); i++){
+            d.push_front(d.back());
+            d.pop_back();
+            d.push_front(deck[i]);
+            cout << " " << d.front();
+        }
+
+        vector<int> ans(d.begin(), d.end()); // front to back of queue
+        return ans;
+    }
+};
