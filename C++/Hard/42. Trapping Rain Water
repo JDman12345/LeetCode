@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int lf = 0;
+        int ln = 0;
+        int r = 0;
+        int highest = 0;
+        unordered_map<int, int> water;
+
+        for(r = 1; r < height.size(); r++){
+            
+            if(height[r] >= height[lf]){
+                ln = lf + 1;
+                while(ln != r){
+                    water[ln] = min((height[r] - height[ln]), (height[lf] - height[ln]));
+                    ln++;
+                }
+                lf = r;
+            }else if(height[r] > height[r - 1]){
+                ln = r - 1;
+                while(ln != lf && height[ln] < height[r]){
+                    water[ln] = height[r] - height[ln];
+                    ln--;
+                }
+            }
+        }
+        for(int i = 0; i < height.size(); i++){
+            if(water[i] > 0){
+                ans += water[i];
+            }
+            cout << water[i] << " ";
+        }
+        return ans; 
+    }
+};
