@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        unordered_map<char, int> cMap;
+        unordered_map<string, int> sMap;
+
+        istringstream in(s);
+        int i = 0;
+        for(string word; in >> word; i++){
+            if(cMap[pattern[i]] != sMap[word]) return false; // If index of character does not match index of string
+
+            cMap[pattern[i]] = i + 1;
+            sMap[word] = i + 1;
+        }
+        return i == pattern.size(); 
+        // This would normally just return true but to account for errors in input I increases for each word so it should be equal to the pattern size 
+    }
+};
