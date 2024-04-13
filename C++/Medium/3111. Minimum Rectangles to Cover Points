@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int minRectanglesToCoverPoints(vector<vector<int>>& points, int w) {
+        int highest = 0;
+        set<int> m;
+        for(auto i:points){
+            m.insert(i[0]);
+        }
+        
+        vector<int> t;
+        for(auto i:m){
+            t.push_back(i);
+        }
+        // Creates a sorted vector of the x positions
+
+        int ans = 1;
+        int i = 1;
+        int j = t[0] + w;
+        
+        while(i < t.size()){
+            while(i < t.size() && t[i] <= j){ // Iterates till the end of the current rectangle
+                i++; 
+            }
+            if(i < t.size()){ // Increase answer as long as i has not gone out of bounds
+                ans++;
+                j = t[i]+w;
+                i++;
+            }
+        }
+        return ans;
+    }
+};
