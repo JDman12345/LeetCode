@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        // Implemented with two stacks but you could use the index stack and the given height vector like this heights[is.top()]
+        int maxArea = 0;
+        stack<int> hs;
+        stack<int> is;
+        int start = 0;
+        int index = 0;
+        int height = 0;
+
+        for(int i = 0; i < heights.size(); i++){
+            start = i;
+            while(!hs.empty() && hs.top() > heights[i]){
+                height = hs.top();
+                index = is.top();
+                hs.pop();
+                is.pop();
+
+                maxArea = max(maxArea, height * (i - index));
+                start = index;
+            }
+            hs.push(heights[i]);
+            is.push(start);
+        }
+
+        while(!hs.empty() && !is.empty()){
+            int j = (hs.top() * (heights.size() - is.top()));
+            maxArea = max(maxArea, j);
+            hs.pop();
+            is.pop();
+        }
+
+        return maxArea;
+    }
+};
