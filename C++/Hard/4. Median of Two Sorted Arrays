@@ -1,0 +1,40 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int total = nums1.size() + nums2.size();
+        int half = total / 2;
+
+        if(nums1.size() > nums2.size()) return findMedianSortedArrays(nums2, nums1);
+
+        int l = 0;
+        int r = nums1.size();
+        int firstM = 0;
+        int secondM = 0;
+        int Aleft, Aright, Bleft, Bright;
+
+        while(l <= r){
+            firstM = (l + r) / 2;
+            secondM = ((nums1.size() + nums2.size() + 1) / 2) - firstM;
+            cout << firstM << " ";
+            cout << secondM << " ";
+
+            Aleft = firstM == 0 ? INT_MIN : nums1[firstM - 1];
+            Aright = firstM == nums1.size() ? INT_MAX :  nums1[firstM];
+            Bleft = secondM == 0 ? INT_MIN : nums2[secondM - 1];
+            Bright = secondM == nums2.size() ? INT_MAX : nums2[secondM];
+
+            if(Aleft <= Bright && Bleft <= Aright){
+                if(total % 2 == 1){
+                    return max(Aleft, Bleft);
+                }else{
+                    return ((double)max(Aleft, Bleft) + min(Aright, Bright)) / 2.0;
+                }
+            }else if(Aleft > Bright){
+                r = firstM - 1;
+            }else{
+                l = firstM + 1;
+            }
+        }
+        return -1;
+    }
+};
