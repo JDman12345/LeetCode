@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        unordered_set<int> found;
+        int n = candyType.size() / 2;
+        int types = 1;
+        found.insert(candyType[0]);
+
+        for(int i = 1; i < candyType.size(); i++){
+            if(candyType[i - 1] != candyType[i] && !found.contains(candyType[i])){
+                found.insert(candyType[i]);
+                types++;
+            }
+        }
+
+        return min(types, n);
+    }
+};
