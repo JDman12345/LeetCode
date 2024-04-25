@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int longestIdealString(string s, int k) {
+        int dp[26] = {0};
+        int ans = 0;
+
+        for(char c : s){
+            int i = c - 'a';
+            dp[i] += 1;
+ 
+            for(int prev = max(0, i - k); prev <= min(25, i + k); prev++){
+                if(prev != i){
+                    dp[i] = max(dp[i], dp[prev] + 1);
+                }
+            }
+            ans = max(ans, dp[i]);
+        }
+
+        return ans;
+    }
+
+};
