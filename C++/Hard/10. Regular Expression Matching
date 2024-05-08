@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        map<pair<int,int>, bool> m;
+        for(int i = 0; i < s.size(); i++)
+        return dfs(s, p, 0, 0, m);
+        return false;
+    }
+
+    bool dfs(string& s, string& p , int i, int j, map<pair<int,int>, bool>& m){
+        if(m.contains({i, j})) return m[{i, j}];
+        if(i >= s.size() && j >= p.size()) return true;
+        if(j >= p.size()) return false;
+
+        bool match = i < s.size() && (s[i] == p[j] || p[j] == '.');
+
+        if(p[j + 1] == '*'){ // using * or not using *
+            m[{i, j}] = (dfs(s, p, i, j + 2, m) || (match && dfs(s, p, i + 1, j, m)));
+            return m[{i, j}];
+        }else if(match){
+            m[{i, j}] = dfs(s, p, i + 1, j + 1, m);
+            return m[{i, j}];
+        }
+        m[{i, j}] = false;
+        return false;
+    }
+};
